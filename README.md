@@ -1,7 +1,7 @@
 # Grocery shopping list
 
 
-## Check my [🥐 Grocery shopping list](https://github.com/facebook/create-react-app)
+## Check my [🥐 Grocery shopping list](https://link_will_be_here)
 
 ## Basic functionality
 - Add new 🥐 to buy
