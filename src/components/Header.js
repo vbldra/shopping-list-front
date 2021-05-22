@@ -5,7 +5,7 @@ import './Header.scss'
 function Header() {
     return (
       <div className="Header">
-        <p>Grocery shopping list</p>
+        <p>🥐 Grocery shopping list</p>
       </div>
     );
   }
