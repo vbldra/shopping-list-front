@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 
-import './ListToBuy.scss'
+import "./ListToBuy.scss";
 
+import { AppContext } from "../components/App";
 import Item from "./Item";
 
 function ListToBuy() {
+    const { itemsToBuy } = useContext(AppContext);
     return (
-        <div className="ListToBuy">
-            <p>List with items to buy</p>
-            <Item />
+        <div className="items-list ListToBuy">
+            {itemsToBuy.map((e) => (
+                <Item data={e} key={e["_id"]} />
+            ))}
         </div>
     );
 }

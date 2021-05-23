@@ -1,0 +1,27 @@
+.Item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f1f1;
+    margin-top: 2px;
+    padding: 15px;
+    border-radius: 5px;
+
+    .itemToBuy {
+    }
+    .itemChecked {
+        color: gray;
+        text-decoration: line-through;
+    }
+    .buttons {
+        button {
+            margin-left: 10px;
+            color: black;
+            font-size: 15px;
+            background: #f1f1f1;
+            border: none;
+            border-radius: 5px;
+            
+        }
+    }
+}

@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import './ListChecked.scss'
 
+import { AppContext } from "../components/App";
 import Item from "./Item";
 
 function ListChecked() {
+    const { itemsChecked } = useContext(AppContext);
     return (
-        <div className="ListChecked">
-            <p>List with checked items</p>
-            <Item />
+        <div className="items-list ListChecked">
+            {itemsChecked.map((e) => (
+                <Item data={e} key={e["_id"]} />
+            ))}
         </div>
     );
 }
