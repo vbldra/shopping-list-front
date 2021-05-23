@@ -41,17 +41,19 @@ function App() {
         fetchAPI();
     }, []);
 
-    console.log(items)
-    const itemsToBuy = items.filter(el => el.toBuy)
-    const itemsChecked = items.filter(el => !el.toBuy)
+    console.log(items);
+    const itemsToBuy = items.filter((el) => el.toBuy);
+    const itemsChecked = items.filter((el) => !el.toBuy);
 
     return (
         <div className="App">
             <AppContext.Provider value={{ itemsToBuy, itemsChecked, dispatch }}>
                 <Header />
                 <InputField />
-                <ListToBuy />
-                <ListChecked />
+                <div className="flex">
+                    <ListToBuy />
+                    <ListChecked />
+                </div>
                 <Footer />
             </AppContext.Provider>
         </div>
