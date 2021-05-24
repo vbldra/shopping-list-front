@@ -10,7 +10,7 @@ function ListChecked() {
     return (
         <div className="items-list ListChecked">
             {itemsChecked.map((e) => (
-                <Item data={e} key={e["_id"]} />
+                <Item data={e} key={e.id} />
             ))}
         </div>
     );

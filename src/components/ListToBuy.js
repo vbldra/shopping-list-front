@@ -10,7 +10,7 @@ function ListToBuy() {
     return (
         <div className="items-list ListToBuy">
             {itemsToBuy.map((e) => (
-                <Item data={e} key={e["_id"]} />
+                <Item data={e} key={e.id} />
             ))}
         </div>
     );

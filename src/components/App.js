@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useState, useContext } from "react";
+import axios from "axios";
 
 import "./App.scss";
 
@@ -11,43 +12,61 @@ import Footer from "./Footer";
 export const AppContext = React.createContext(null);
 
 function App() {
-    const [items, dispatch] = useReducer((state, action) => {
-        switch (action.type) {
-            // fetch from API
-            case "fetch":
-                return action.data;
-
-            case "add":
-                return console.log("added", action.name);
-
-            case "change":
-                return console.log("change", action.name);
-
-            case "delete":
-                return console.log("delete", action.name);
-
-            default:
-                return state;
-        }
-    }, []);
+    const [items, setItems] = useState([]);
 
     //  Fetching data from db once
     useEffect(() => {
         async function fetchAPI() {
-            const res = await fetch("/items");
-            const db = await res.json();
-            dispatch({ type: "fetch", data: db });
+            try {
+                const res = await axios.get("/items");
+                setItems(res.data);
+            } catch (error) {
+                console.error(error);
+            }
         }
         fetchAPI();
     }, []);
 
-    console.log(items);
+    const addItem = async (value) => {
+        const newItem = { title: value };
+        const res = await axios.post("/items", newItem);
+        setItems([...items, res.data]);
+    };
+
+    const updateItem = async (item, newValue) => {
+        const updatedItem = JSON.parse(JSON.stringify(item));
+        updatedItem.title = newValue;
+        const res = await axios.put(`/items/${item._id}`, updatedItem);
+        items.map((e) => {
+            if (e._id === res.data._id) {
+                e.title = newValue;
+            }
+            return e
+        });
+        setItems([...items]);
+    };
+
+    const deleteItem = async (id) => {
+        const res = await axios.delete(`/items/${id}`);
+        const newItemsArr = items.filter((e) => e._id !== res.data._id);
+        setItems(newItemsArr);
+    };
+
+    // console.log(items);
     const itemsToBuy = items.filter((el) => el.toBuy);
     const itemsChecked = items.filter((el) => !el.toBuy);
 
     return (
         <div className="App">
-            <AppContext.Provider value={{ itemsToBuy, itemsChecked, dispatch }}>
+            <AppContext.Provider
+                value={{
+                    itemsToBuy,
+                    itemsChecked,
+                    addItem,
+                    deleteItem,
+                    updateItem,
+                }}
+            >
                 <Header />
                 <InputField />
                 <div className="flex">
