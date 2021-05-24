@@ -1,6 +1,12 @@
 import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+    faCheck,
+    faCheckCircle,
+    faCircle,
+    faPencilAlt,
+    faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 import "./Item.scss";
 
@@ -8,46 +14,48 @@ import { AppContext } from "../components/App";
 
 function Item(props) {
     const { deleteItem, updateItem } = useContext(AppContext);
-    const [isRename, setIsRename] = useState("");
     const [newText, setNewText] = useState("");
+    const [isClicked, setIsClicked] = useState(false);
 
-    // Renaming
+    // Rename
+    // Click on the Pencil button
     const handleClickRename = () => {
-        setIsRename(props.data._id);
+        setIsClicked(!isClicked); 
     };
-
+    // Change the state while typing
     const handleRenameChange = (e) => {
         setNewText(e.target.value);
-    }
-
+    };
+    // Submit new name and close rename-form
     const handleRenameSubmit = (e) => {
         e.preventDefault();
-        updateItem(props.data, newText)
-        setIsRename("")
-    }
+        updateItem(props.data, newText);
+        setIsClicked(false)
+    };
 
-    // Deleting
+    // Delete
     const handleClickDelete = () => {
         deleteItem(props.data._id);
     };
 
     return (
         <div className="Item">
-            {isRename===props.data._id ? (
-                <form
-                    className="rename-form"
-                    onSubmit={handleRenameSubmit}
-                >
+            <FontAwesomeIcon
+                icon={props.data.toBuy ? faCircle : faCheckCircle}
+            />
+            {isClicked ? (
+                <form className="rename-form" onSubmit={handleRenameSubmit}>
                     <label className="rename-item">
                         <input
                             type="text"
                             name="item"
+                            placeholder={props.data.title}
                             value={newText}
                             onChange={handleRenameChange}
                         />
                     </label>
                     <button className="btn" type="submit" value="rename">
-                        Rename
+                        <FontAwesomeIcon icon={faCheck} />
                     </button>
                 </form>
             ) : (
@@ -55,6 +63,7 @@ function Item(props) {
                     {props.data.title}
                 </p>
             )}
+
             <div className="buttons">
                 <button className="rename-btn" onClick={handleClickRename}>
                     <FontAwesomeIcon icon={faPencilAlt} />
