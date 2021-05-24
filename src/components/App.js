@@ -5,8 +5,7 @@ import "./App.scss";
 
 import Header from "./Header";
 import InputField from "./InputField";
-import ListToBuy from "./ListToBuy";
-import ListChecked from "./ListChecked";
+import ItemsList from "./ItemsList";
 import Footer from "./Footer";
 
 export const AppContext = React.createContext(null);
@@ -34,16 +33,27 @@ function App() {
     };
 
     const updateItem = async (item, newValue) => {
-        const updatedItem = JSON.parse(JSON.stringify(item));
-        updatedItem.title = newValue;
-        const res = await axios.put(`/items/${item._id}`, updatedItem);
+        item.title = newValue
+        const res = await axios.put(`/items/${item._id}`, item);
         items.map((e) => {
             if (e._id === res.data._id) {
                 e.title = newValue;
             }
-            return e
+            return e;
         });
-        setItems([...items]);
+        setItems(items);
+    };
+
+    const checkItem = async (item) => {
+        item.toBuy = !item.toBuy
+        const res = await axios.put(`/items/${item._id}`, item);
+        items.map((e) => {
+            if (e._id === res.data._id) {
+                e.toBuy = !res.data.toBuy;
+            }
+            return e;
+        });
+        setItems(items);
     };
 
     const deleteItem = async (id) => {
@@ -51,8 +61,7 @@ function App() {
         const newItemsArr = items.filter((e) => e._id !== res.data._id);
         setItems(newItemsArr);
     };
-
-    // console.log(items);
+    
     const itemsToBuy = items.filter((el) => el.toBuy);
     const itemsChecked = items.filter((el) => !el.toBuy);
 
@@ -65,13 +74,14 @@ function App() {
                     addItem,
                     deleteItem,
                     updateItem,
+                    checkItem
                 }}
             >
                 <Header />
                 <InputField />
                 <div className="flex">
-                    <ListToBuy />
-                    <ListChecked />
+                    <ItemsList items={itemsToBuy}/>
+                    <ItemsList items={itemsChecked} type="checked"/>
                 </div>
                 <Footer />
             </AppContext.Provider>

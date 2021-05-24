@@ -6,6 +6,21 @@
     margin-bottom: 2px;
     padding: 15px;
     border-radius: 5px;
+    .item-btn {
+        margin-left: 10px;
+        // color: black;
+        font-size: 15px;
+        background: #f1f1f1;
+        border: none;
+        border-radius: 5px;
+    }
+    p {
+        flex-grow: 1;
+    }
+    
+    .check-btn {
+        color: red
+    }
 
     .itemToBuy {
     }
@@ -13,17 +28,13 @@
         color: gray;
         text-decoration: line-through;
     }
-    .buttons {
-        button {
-            margin-left: 10px;
-            color: black;
-            font-size: 15px;
-            background: #f1f1f1;
-            border: none;
-            border-radius: 5px;
-        }
-        .rename-btn:hover {
-            background:red;
-        }
+
+    .hover-btn:hover {
+        background: red;
+    }
+    .rename-btn {
+    }
+    .delete-btn {
+
     }
 }

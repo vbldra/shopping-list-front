@@ -1,26 +1,30 @@
 import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faCheck,
-    faCheckCircle,
-    faCircle,
     faPencilAlt,
     faTrash,
+    faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faCircle } from "@fortawesome/free-regular-svg-icons";
 
 import "./Item.scss";
 
 import { AppContext } from "../components/App";
 
 function Item(props) {
-    const { deleteItem, updateItem } = useContext(AppContext);
+    const { deleteItem, updateItem, checkItem } = useContext(AppContext);
     const [newText, setNewText] = useState("");
     const [isClicked, setIsClicked] = useState(false);
+
+    // Check item and move to the bottom
+    const handleClickItem = () => {
+        !isClicked && checkItem(props.data);
+    };
 
     // Rename
     // Click on the Pencil button
     const handleClickRename = () => {
-        setIsClicked(!isClicked); 
+        setIsClicked(!isClicked);
     };
     // Change the state while typing
     const handleRenameChange = (e) => {
@@ -30,7 +34,7 @@ function Item(props) {
     const handleRenameSubmit = (e) => {
         e.preventDefault();
         updateItem(props.data, newText);
-        setIsClicked(false)
+        setIsClicked(false);
     };
 
     // Delete
@@ -40,9 +44,12 @@ function Item(props) {
 
     return (
         <div className="Item">
-            <FontAwesomeIcon
-                icon={props.data.toBuy ? faCircle : faCheckCircle}
-            />
+            <button className="check-btn item-btn" onClick={handleClickItem}>
+                <FontAwesomeIcon
+                    icon={props.data.toBuy ? faCircle : faCheckCircle}
+                />
+            </button>
+
             {isClicked ? (
                 <form className="rename-form" onSubmit={handleRenameSubmit}>
                     <label className="rename-item">
@@ -59,19 +66,27 @@ function Item(props) {
                     </button>
                 </form>
             ) : (
-                <p className={props.data.toBuy ? "itemToBuy" : "itemChecked"}>
+                <p
+                    onClick={handleClickItem}
+                    className={props.data.toBuy ? "itemToBuy" : "itemChecked"}
+                >
                     {props.data.title}
                 </p>
             )}
 
-            <div className="buttons">
-                <button className="rename-btn" onClick={handleClickRename}>
-                    <FontAwesomeIcon icon={faPencilAlt} />
-                </button>
-                <button className="delete-btn" onClick={handleClickDelete}>
-                    <FontAwesomeIcon icon={faTrash} />
-                </button>
-            </div>
+            <button
+                className="rename-btn item-btn hover-btn"
+                onClick={handleClickRename}
+            >
+                <FontAwesomeIcon icon={faPencilAlt} />
+            </button>
+
+            <button
+                className="delete-btn item-btn hover-btn"
+                onClick={handleClickDelete}
+            >
+                <FontAwesomeIcon icon={faTrash} />
+            </button>
         </div>
     );
 }
