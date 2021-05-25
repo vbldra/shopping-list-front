@@ -1,6 +1,30 @@
 .InputField {
-    display: flex;
     max-width: 400px;
-    justify-content: center;
-
+    background: #f2f2f2;
+    margin: 10px auto;
+    border-radius: 5px;
+    .items-form {
+        display: flex;
+        .input-item {
+            flex-grow: 1;
+            border: 1px solid #F25E7A;
+            border-right: none;
+            padding: 15px 20px;
+            border-radius: 5px 0 0 5px;
+            &:focus {
+                outline: none;
+            }
+        }
+        .add-btn {
+            font-size: 15px;
+            background: #F25E7A;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            padding: 15px 20px;
+            &:hover {
+                background-color: #0B38BF;
+            }
+        }
+    }
 }

@@ -2,39 +2,65 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f1f1f1;
+    background: #f2f2f2;
     margin-bottom: 2px;
-    padding: 15px;
     border-radius: 5px;
+    &:hover {
+        background: #e0e0e0;
+    }
     .item-btn {
-        margin-left: 10px;
-        // color: black;
         font-size: 15px;
-        background: #f1f1f1;
         border: none;
         border-radius: 5px;
+        padding: 15px 20px;
+        background: none;
     }
-    p {
-        flex-grow: 1;
-    }
-    
+
     .check-btn {
-        color: red
+        color: #5274d9;
     }
 
-    .itemToBuy {
-    }
-    .itemChecked {
-        color: gray;
-        text-decoration: line-through;
+    .rename-form {
+        display: flex;
+        .input-rename {
+            width: 150px;
+            border: 1px solid #5274d9;
+            border-right: none;
+            padding-left: 20px;
+            border-radius: 5px 0 0 5px;
+            &:focus {
+                outline: none;
+            }
+        }
+        .rename-btn {
+            font-size: 15px;
+            background: #5274d9;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            padding: 15px 20px;
+            &:hover {
+                background-color: #0b38bf;
+            }
+            &:disabled {
+                background-color: #e6e6e6;
+            }
+        }
     }
 
+    p {
+        padding: 15px 20px;
+        flex-grow: 1;
+        &.itemChecked {
+            color: gray;
+            text-decoration: line-through;
+        }
+    }
+    .right-btn {
+        display: flex;
+    }
     .hover-btn:hover {
-        background: red;
-    }
-    .rename-btn {
-    }
-    .delete-btn {
-
+        background: #5274d9;
+        color: white;
     }
 }

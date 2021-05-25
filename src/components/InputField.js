@@ -1,4 +1,6 @@
 import React, { useState, useContext } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import "./InputField.scss";
 
@@ -18,23 +20,24 @@ function InputField() {
         if (inputText.length >= 1) {
             addItem(inputText);
         }
-        setInputText("")
+        setInputText("");
     };
 
     return (
         <div className="InputField">
             <form className="items-form" onSubmit={handleSubmit}>
-                <label className="input-item">
-                    <input
-                        type="text"
-                        name="item"
-                        value={inputText}
-                        onChange={handleChange}
-                    />
-                </label>
-                <button className="btn" type="submit" value="add">Add</button>
+                <input
+                    className="input-item"
+                    type="text"
+                    placeholder="Add something here"
+                    name="item"
+                    value={inputText}
+                    onChange={handleChange}
+                />
+                <button className="add-btn" type="submit" value="add">
+                    <FontAwesomeIcon icon={faPlus} />
+                </button>
             </form>
-            <p>What you want to buy?</p>
         </div>
     );
 }

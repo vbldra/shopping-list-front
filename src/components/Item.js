@@ -52,16 +52,21 @@ function Item(props) {
 
             {isClicked ? (
                 <form className="rename-form" onSubmit={handleRenameSubmit}>
-                    <label className="rename-item">
-                        <input
-                            type="text"
-                            name="item"
-                            placeholder={props.data.title}
-                            value={newText}
-                            onChange={handleRenameChange}
-                        />
-                    </label>
-                    <button className="btn" type="submit" value="rename">
+                    <input
+                        className="input-rename"
+                        type="text"
+                        name="item"
+                        placeholder={props.data.title}
+                        value={newText}
+                        onChange={handleRenameChange}
+                    />
+
+                    <button
+                        className="rename-btn"
+                        type="submit"
+                        value="rename"
+                        disabled={newText.length >= 1 ? false : true}
+                    >
                         <FontAwesomeIcon icon={faCheck} />
                     </button>
                 </form>
@@ -73,20 +78,21 @@ function Item(props) {
                     {props.data.title}
                 </p>
             )}
+            <div className="right-btn">
+                <button
+                    className="rename-btn item-btn hover-btn"
+                    onClick={handleClickRename}
+                >
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                </button>
 
-            <button
-                className="rename-btn item-btn hover-btn"
-                onClick={handleClickRename}
-            >
-                <FontAwesomeIcon icon={faPencilAlt} />
-            </button>
-
-            <button
-                className="delete-btn item-btn hover-btn"
-                onClick={handleClickDelete}
-            >
-                <FontAwesomeIcon icon={faTrash} />
-            </button>
+                <button
+                    className="delete-btn item-btn hover-btn"
+                    onClick={handleClickDelete}
+                >
+                    <FontAwesomeIcon icon={faTrash} />
+                </button>
+            </div>
         </div>
     );
 }

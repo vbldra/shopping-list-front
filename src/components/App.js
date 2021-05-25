@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import "./App.scss";
@@ -11,13 +11,15 @@ import Footer from "./Footer";
 export const AppContext = React.createContext(null);
 
 function App() {
+    const URL = "https://vbldra-grocery-shopping-list.herokuapp.com"
     const [items, setItems] = useState([]);
+    const [toggleDarkMode, setToggleDarkMode] = useState(false);
 
     //  Fetching data from db once
     useEffect(() => {
         async function fetchAPI() {
             try {
-                const res = await axios.get("/items");
+                const res = await axios.get(`${URL}/items`);
                 setItems(res.data);
             } catch (error) {
                 console.error(error);
@@ -28,13 +30,13 @@ function App() {
 
     const addItem = async (value) => {
         const newItem = { title: value };
-        const res = await axios.post("/items", newItem);
+        const res = await axios.post(`${URL}/items`, newItem);
         setItems([...items, res.data]);
     };
 
     const updateItem = async (item, newValue) => {
-        item.title = newValue
-        const res = await axios.put(`/items/${item._id}`, item);
+        item.title = newValue;
+        const res = await axios.put(`${URL}/items/${item._id}`, item);
         items.map((e) => {
             if (e._id === res.data._id) {
                 e.title = newValue;
@@ -45,8 +47,8 @@ function App() {
     };
 
     const checkItem = async (item) => {
-        item.toBuy = !item.toBuy
-        const res = await axios.put(`/items/${item._id}`, item);
+        item.toBuy = !item.toBuy;
+        const res = await axios.put(`${URL}/items/${item._id}`, item);
         items.map((e) => {
             if (e._id === res.data._id) {
                 e.toBuy = !res.data.toBuy;
@@ -57,11 +59,11 @@ function App() {
     };
 
     const deleteItem = async (id) => {
-        const res = await axios.delete(`/items/${id}`);
+        const res = await axios.delete(`${URL}/items/${id}`);
         const newItemsArr = items.filter((e) => e._id !== res.data._id);
         setItems(newItemsArr);
     };
-    
+
     const itemsToBuy = items.filter((el) => el.toBuy);
     const itemsChecked = items.filter((el) => !el.toBuy);
 
@@ -69,19 +71,21 @@ function App() {
         <div className="App">
             <AppContext.Provider
                 value={{
+                    toggleDarkMode,
+                    setToggleDarkMode,
                     itemsToBuy,
                     itemsChecked,
                     addItem,
                     deleteItem,
                     updateItem,
-                    checkItem
+                    checkItem,
                 }}
             >
                 <Header />
                 <InputField />
                 <div className="flex">
-                    <ItemsList items={itemsToBuy}/>
-                    <ItemsList items={itemsChecked} type="checked"/>
+                    <ItemsList items={itemsToBuy} />
+                    <ItemsList items={itemsChecked} type="checked" />
                 </div>
                 <Footer />
             </AppContext.Provider>
