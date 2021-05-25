@@ -36,25 +36,25 @@ function App() {
     const updateItem = async (item, newValue) => {
         item.title = newValue;
         const res = await axios.put(`${URL}/items/${item._id}`, item);
-        items.map((e) => {
+        const updatedItem = items.map((e) => {
             if (e._id === res.data._id) {
                 e.title = newValue;
             }
             return e;
         });
-        setItems(items);
+        setItems(updatedItem);
     };
 
     const checkItem = async (item) => {
         item.toBuy = !item.toBuy;
         const res = await axios.put(`${URL}/items/${item._id}`, item);
-        items.map((e) => {
+        const updatedItem = items.map((e) => {
             if (e._id === res.data._id) {
                 e.toBuy = res.data.toBuy;
             }
             return e;
         });
-        setItems(items);
+        setItems(updatedItem);
     };
 
     const deleteItem = async (id) => {
@@ -65,7 +65,7 @@ function App() {
 
     const itemsToBuy = items.filter((el) => el.toBuy);
     const itemsChecked = items.filter((el) => !el.toBuy);
-    // console.log(itemsToBuy)
+    
     return (
         <div className="App">
             <AppContext.Provider

@@ -7,12 +7,8 @@ import { AppContext } from "../components/App";
 
 function ItemsList(props) {
     const { itemsToBuy, itemsChecked } = useContext(AppContext);
-    // console.log(itemsToBuy);
-    const items = props.type === "checked" ? itemsChecked : itemsToBuy
 
-    const listItems = items.map((e) => (
-        <Item data={e} key={e._id} />
-    ))
+    const items = props.type === "checked" ? itemsChecked : itemsToBuy;
 
     return (
         <div
@@ -22,7 +18,9 @@ function ItemsList(props) {
                     : "items-list items-to-buy"
             }
         >
-            {listItems}
+            {items.map((e) => (
+                <Item data={e} key={e._id} />
+            ))}
         </div>
     );
 }
