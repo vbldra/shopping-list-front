@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import "./ItemsList.scss";
 
 import Item from "./Item";
+import { AppContext } from "../components/App";
 
 function ItemsList(props) {
+    const { itemsToBuy, itemsChecked } = useContext(AppContext);
+    // console.log(itemsToBuy);
+    const items = props.type === "checked" ? itemsChecked : itemsToBuy
+
+    const listItems = items.map((e) => (
+        <Item data={e} key={e._id} />
+    ))
+
     return (
         <div
             className={
@@ -13,9 +22,7 @@ function ItemsList(props) {
                     : "items-list items-to-buy"
             }
         >
-            {props.items.map((e) => (
-                <Item data={e} key={e._id} />
-            ))}
+            {listItems}
         </div>
     );
 }

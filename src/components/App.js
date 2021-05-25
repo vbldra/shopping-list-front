@@ -13,7 +13,6 @@ export const AppContext = React.createContext(null);
 function App() {
     const URL = "https://vbldra-grocery-shopping-list.herokuapp.com"
     const [items, setItems] = useState([]);
-    const [toggleDarkMode, setToggleDarkMode] = useState(false);
 
     //  Fetching data from db once
     useEffect(() => {
@@ -51,7 +50,7 @@ function App() {
         const res = await axios.put(`${URL}/items/${item._id}`, item);
         items.map((e) => {
             if (e._id === res.data._id) {
-                e.toBuy = !res.data.toBuy;
+                e.toBuy = res.data.toBuy;
             }
             return e;
         });
@@ -66,26 +65,24 @@ function App() {
 
     const itemsToBuy = items.filter((el) => el.toBuy);
     const itemsChecked = items.filter((el) => !el.toBuy);
-
+    // console.log(itemsToBuy)
     return (
         <div className="App">
             <AppContext.Provider
                 value={{
-                    toggleDarkMode,
-                    setToggleDarkMode,
-                    itemsToBuy,
-                    itemsChecked,
                     addItem,
                     deleteItem,
                     updateItem,
                     checkItem,
+                    itemsToBuy,
+                    itemsChecked
                 }}
             >
                 <Header />
                 <InputField />
                 <div className="flex">
-                    <ItemsList items={itemsToBuy} />
-                    <ItemsList items={itemsChecked} type="checked" />
+                    <ItemsList />
+                    <ItemsList type="checked" />
                 </div>
                 <Footer />
             </AppContext.Provider>
