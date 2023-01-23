@@ -10,8 +10,10 @@ import Footer from "./Footer";
 
 export const AppContext = React.createContext(null);
 
+/** ENV VARIABLES **/
+const URL = process.env.REACT_APP_BACKEND
+
 function App() {
-    const URL = "https://vbldra-grocery-shopping-list.herokuapp.com"
     const [items, setItems] = useState([]);
 
     //  Fetching data from db once
