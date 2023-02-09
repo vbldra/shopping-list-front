@@ -1,24 +1,37 @@
 * {
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
 }
 
 body {
-    background-color: white;
+  background-color: white;
 }
 
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 .flex {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    .items-list {
-        margin: 0 10px;
-        flex-basis: 400px;
-        max-width: 400px;
-    }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  & > * {
+    margin: 0 10px;
+    flex-basis: 400px;
+    max-width: 400px;
+  }
+}
+
+.items-purchased p {
+  color: gray;
+  text-decoration: line-through;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.items-to-buy p {
+  &:hover {
+    text-decoration: line-through;
+  }
 }

@@ -1,66 +1,59 @@
 .Item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f2f2f2;
-    margin-bottom: 2px;
+  display: flex;
+  justify-content:space-between;
+  background: #f2f2f2;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  height: 50px;
+  cursor: default;
+  &:hover {
+    background: #e0e0e0;
+  }
+
+  .name {
+    padding: 15px 20px;
+    flex-grow: 1;
+    text-align: left;
+  }
+
+  .item-btn {
+    font-size: 15px;
+    border: none;
     border-radius: 5px;
+    padding: 15px 20px;
+    background: none;
+  }
+  .edit-form {
+    padding: 0;
+    .edit-input {
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      border: 1px solid #5274d9;
+      border-right: none;
+      padding-left: 20px;
+      border-radius: 5px 0 0 5px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .edit-submit-btn {
+    font-size: 15px;
+    background: #5274d9;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    padding: 15px 20px;
     &:hover {
-        background: #e0e0e0;
+      background-color: #0b38bf;
     }
-    .item-btn {
-        font-size: 15px;
-        border: none;
-        border-radius: 5px;
-        padding: 15px 20px;
-        background: none;
-    }
-
-    .check-btn {
-        color: #5274d9;
-    }
-
-    .rename-form {
-        display: flex;
-        .input-rename {
-            width: 150px;
-            border: 1px solid #5274d9;
-            border-right: none;
-            padding-left: 20px;
-            border-radius: 5px 0 0 5px;
-            &:focus {
-                outline: none;
-            }
-        }
-        .rename-btn {
-            font-size: 15px;
-            background: #5274d9;
-            color: white;
-            border: none;
-            border-radius: 0 5px 5px 0;
-            padding: 15px 20px;
-            &:hover {
-                background-color: #0b38bf;
-            }
-            &:disabled {
-                background-color: #e6e6e6;
-            }
-        }
-    }
-
-    p {
-        padding: 15px 20px;
-        flex-grow: 1;
-        &.itemChecked {
-            color: gray;
-            text-decoration: line-through;
-        }
-    }
-    .right-btn {
-        display: flex;
-    }
-    .hover-btn:hover {
-        background: #5274d9;
-        color: white;
-    }
+  }
+  .hover-btn:hover {
+    background: #0b38bf;
+    color: white;
+  }
+  .delete-btn:hover {
+    background-color: #adadad;
+  }
 }
