@@ -1,100 +1,97 @@
 import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faPencilAlt,
-    faTrash,
-    faCheck,
+  faPencilAlt,
+  faTrash,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { faCheckCircle, faCircle } from "@fortawesome/free-regular-svg-icons";
 
 import "./Item.scss";
 
 import { AppContext } from "../components/App";
 
 function Item(props) {
-    const { deleteItem, updateItem, checkItem } = useContext(AppContext);
-    const [newText, setNewText] = useState("");
-    const [isClicked, setIsClicked] = useState(false);
+  const { deleteItem, updateItem, checkItem } = useContext(AppContext);
+  const [newItemName, setNewItemName] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
-    // Check item and move to the bottom
-    const handleClickItem = () => {
-        !isClicked && checkItem(props.data);
-    };
+  // "Purchase" item and move to "done"
+  const handleClickItem = () => {
+    !isEditing && checkItem(props.data);
+  };
 
-    // Rename
-    // Click on the Pencil button
-    const handleClickRename = () => {
-        setIsClicked(!isClicked);
-    };
-    // Change the state while typing
-    const handleRenameChange = (e) => {
-        setNewText(e.target.value);
-    };
-    // Submit new name and close rename-form
-    const handleRenameSubmit = (e) => {
-        e.preventDefault();
-        updateItem(props.data, newText);
-        setIsClicked(false);
-    };
+  // Edit item
+  // Click on the Pencil button
+  const handleClickEdit = () => {
+    setIsEditing(!isEditing);
+  };
+  // Change the state while typing
+  const handleEditChange = (e) => {
+    setNewItemName(e.target.value);
+  };
+  // Submit new name and close edit-form
+  const handleUpdateItemName = (e) => {
+    e.preventDefault();
+    newItemName.length > 0 && updateItem(props.data, newItemName);
+    setIsEditing(false);
+    setNewItemName("");
+  };
 
-    // Delete
-    const handleClickDelete = () => {
-        deleteItem(props.data._id);
-    };
+  // Delete
+  const handleClickDelete = () => {
+    deleteItem(props.data._id);
+  };
 
-    return (
-        <div className="Item">
-            <button className="check-btn item-btn" onClick={handleClickItem}>
-                <FontAwesomeIcon
-                    icon={props.data.toBuy ? faCircle : faCheckCircle}
-                />
-            </button>
-
-            {isClicked ? (
-                <form className="rename-form" onSubmit={handleRenameSubmit}>
-                    <input
-                        className="input-rename"
-                        type="text"
-                        name="item"
-                        placeholder={props.data.title}
-                        value={newText}
-                        onChange={handleRenameChange}
-                    />
-
-                    <button
-                        className="rename-btn"
-                        type="submit"
-                        value="rename"
-                        disabled={newText.length >= 1 ? false : true}
-                    >
-                        <FontAwesomeIcon icon={faCheck} />
-                    </button>
-                </form>
-            ) : (
-                <p
-                    onClick={handleClickItem}
-                    className={props.data.toBuy ? "itemToBuy" : "itemChecked"}
-                >
-                    {props.data.title}
-                </p>
-            )}
-            <div className="right-btn">
-                <button
-                    className="rename-btn item-btn hover-btn"
-                    onClick={handleClickRename}
-                >
-                    <FontAwesomeIcon icon={faPencilAlt} />
-                </button>
-
-                <button
-                    className="delete-btn item-btn hover-btn"
-                    onClick={handleClickDelete}
-                >
-                    <FontAwesomeIcon icon={faTrash} />
-                </button>
-            </div>
-        </div>
-    );
+  return (
+    <div className="Item">
+      {!isEditing ? (
+        <>
+          <p
+            className="item-name name"
+            value={props.data.title}
+            onClick={handleClickItem}
+          >
+            {props.data.title}
+          </p>
+          <button
+            className="to-edit-btn item-btn hover-btn"
+            onClick={handleClickEdit}
+          >
+            <FontAwesomeIcon icon={faPencilAlt} />
+          </button>
+        </>
+      ) : (
+        <>
+          <form
+            id="editForm"
+            className="edit-form name"
+            onSubmit={handleUpdateItemName}
+          >
+            <input
+              className="edit-input"
+              type="text"
+              name="item"
+              placeholder={props.data.title}
+              onChange={handleEditChange}
+              value={newItemName}
+            />
+          </form>
+          <button
+            className="edit-submit-btn item-btn hover-btn"
+            onClick={handleUpdateItemName}
+          >
+            <FontAwesomeIcon icon={faCheck} />
+          </button>
+        </>
+      )}
+      <button
+        className="delete-btn item-btn hover-btn"
+        onClick={handleClickDelete}
+      >
+        <FontAwesomeIcon icon={faTrash} />
+      </button>
+    </div>
+  );
 }
 
 export default Item;

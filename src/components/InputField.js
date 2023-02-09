@@ -7,39 +7,39 @@ import "./InputField.scss";
 import { AppContext } from "../components/App";
 
 function InputField() {
-    const { addItem } = useContext(AppContext);
+  const { addItem } = useContext(AppContext);
 
-    const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState("");
 
-    const handleChange = (event) => {
-        setInputText(event.target.value);
-    };
+  const handleChange = (event) => {
+    setInputText(event.target.value);
+  };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (inputText.length >= 1) {
-            addItem(inputText);
-        }
-        setInputText("");
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (inputText.length >= 1) {
+      addItem(inputText);
+    }
+    setInputText("");
+  };
 
-    return (
-        <div className="InputField">
-            <form className="items-form" onSubmit={handleSubmit}>
-                <input
-                    className="input-item"
-                    type="text"
-                    placeholder="Add something here"
-                    name="item"
-                    value={inputText}
-                    onChange={handleChange}
-                />
-                <button className="add-btn" type="submit" value="add">
-                    <FontAwesomeIcon icon={faPlus} />
-                </button>
-            </form>
-        </div>
-    );
+  return (
+    <div className="InputField flex">
+      <form className="items-form" onSubmit={handleSubmit}>
+        <input
+          className="input-item"
+          type="text"
+          placeholder="Add something here"
+          name="item"
+          value={inputText}
+          onChange={handleChange}
+        />
+        <button className="add-btn" type="submit" value="add">
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+      </form>
+    </div>
+  );
 }
 
 export default InputField;
